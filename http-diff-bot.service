@@ -1,0 +1,14 @@
+[Unit]
+Description=A simple golang discord bot for periodical diff checks between two html documents
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run --rm --name %n http-diff-bot
+
+[Install]
+WantedBy=multi-user.target
